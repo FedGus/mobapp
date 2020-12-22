@@ -23,6 +23,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     List<ProductDetail> list;
     List<Images> listimg;
 
+
     public ListAdapter(Context context, List<ProductDetail> list){
         this.context = context;
         this.list = list;

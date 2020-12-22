@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="10dp"
+                android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -38,8 +39,18 @@
                 android:id="@+id/productText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="24sp" />
+                android:padding="8dp"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/productBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="fill_horizontal"
+                android:padding="10dp"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/productCity"
@@ -62,14 +73,6 @@
                 android:layout_height="150dp"
                 app:cameraZoom="17"
                 tools:context=".MapsActivity" />
-
-            <TextView
-                android:id="@+id/productBody"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="fill_horizontal"
-                android:padding="10dp"
-                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 

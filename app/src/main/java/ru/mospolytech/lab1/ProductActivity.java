@@ -61,27 +61,17 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                     (product) -> {
                                         listimg = new ArrayList<>();
                                         listimg.clear();
-
-
-
                                         newsHeader.setText(product.all.get(0).title);
-                                        //newsText.setText(product.all.price/100 + " ₽");
+                                        newsText.setText("Федор Гусев создал(а) эту петицию, адресованную Аэрофлот (Публичное акционерное общество «Аэрофлот — российские авиалинии»)");
                                         newsBody.setText(product.all.get(0).content);
-
-
-
                                         Glide.with(this).load(product.all.get(0).image + "").into(newsImageFull);
-
                                         productCity.setText("Адрес: " + product.all.get(0).address);
-
-
-
-                                        // Add a marker in Sydney and move the camera
-                                        LatLng sydney = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));
+                                        // Add a marker and move the camera
+                                        LatLng pin = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));
                                         mMap.addMarker(new MarkerOptions()
-                                                .position(sydney)
+                                                .position(pin)
                                                 .title("Marker in Sydney"));
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
                                     },
                                     (error) -> {
                                         error.printStackTrace();
