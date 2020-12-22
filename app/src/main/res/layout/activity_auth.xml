@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/style_button_primary"
+        android:onClick="onClick"
         android:text="Войти"
         android:textColor="@color/common_google_signin_btn_text_dark_default" />
 

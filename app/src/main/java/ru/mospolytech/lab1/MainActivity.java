@@ -29,69 +29,62 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.plug_app);
-        try {
-            Thread.sleep(5000);
-            Intent intent = new Intent(this, AuthActivity.class);
-            this.startActivity(intent);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        setContentView(R.layout.activity_main);
 
-//        list = new ArrayList<>();
-//        adapter = new ListAdapter(this, list);
-//        recyclerView = findViewById(R.id.list);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        textSearch = findViewById(R.id.textSearch);
-//        api = ApiConfiguration.getApi();
-//        disposables = new CompositeDisposable();
-//        this.onClick(this.recyclerView);
-//
-//        disposables.add(api.productlist(textSearch.getText().toString())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe((productsList) -> {
-//
-//                    findViewById(R.id.progressBar).setVisibility(View.GONE);
-//                    findViewById(R.id.list).setVisibility(View.VISIBLE);
-//                    list.clear();
-//                    list.addAll(productsList.all);
-//                    adapter.notifyDataSetChanged();
-//                }, (error) -> {
-//                    Toast.makeText(this, "При поиске возникла ошибка:\n" + error.getMessage(),
-//                            Toast.LENGTH_LONG).show();
-//                    findViewById(R.id.progressBar).setVisibility(View.GONE);
-//                    findViewById(R.id.list).setVisibility(View.VISIBLE);
-//
-//                }));
-//
-//    }
-//
-//
-//    public void onClick(View view){
-//        if (textSearch.getText().toString().isEmpty()){
-//            list.clear();
-//        } else {
-//            disposables.add(api.productlist(textSearch.getText().toString())
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe((productsList) -> {
-//
-//                        findViewById(R.id.progressBar).setVisibility(View.GONE);
-//                        findViewById(R.id.list).setVisibility(View.VISIBLE);
-//                        list.clear();
-//                        list.addAll(productsList.all);
-//                        adapter.notifyDataSetChanged();
-//                    }, (error) -> {
-//                        Toast.makeText(this, "При поиске возникла ошибка:\n" + error.getMessage(),
-//                                Toast.LENGTH_LONG).show();
-//                        findViewById(R.id.progressBar).setVisibility(View.GONE);
-//                        findViewById(R.id.list).setVisibility(View.VISIBLE);
-//
-//                    }));
-//            Toast.makeText(this, "Показаны результаты поиска: " + textSearch.getText().toString(), Toast.LENGTH_SHORT).show();
-//        }
+        list = new ArrayList<>();
+        adapter = new ListAdapter(this, list);
+        recyclerView = findViewById(R.id.list);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        textSearch = findViewById(R.id.textSearch);
+        api = ApiConfiguration.getApi();
+        disposables = new CompositeDisposable();
+        this.onClick(this.recyclerView);
+
+        disposables.add(api.productlist(textSearch.getText().toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((productsList) -> {
+
+                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    findViewById(R.id.list).setVisibility(View.VISIBLE);
+                    list.clear();
+                    list.addAll(productsList.all);
+                    adapter.notifyDataSetChanged();
+                }, (error) -> {
+                    Toast.makeText(this, "При поиске возникла ошибка:\n" + error.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                    findViewById(R.id.list).setVisibility(View.VISIBLE);
+
+                }));
+
+    }
+
+
+    public void onClick(View view){
+        if (textSearch.getText().toString().isEmpty()){
+            list.clear();
+        } else {
+            disposables.add(api.productlist(textSearch.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((productsList) -> {
+
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                        findViewById(R.id.list).setVisibility(View.VISIBLE);
+                        list.clear();
+                        list.addAll(productsList.all);
+                        adapter.notifyDataSetChanged();
+                    }, (error) -> {
+                        Toast.makeText(this, "При поиске возникла ошибка:\n" + error.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                        findViewById(R.id.list).setVisibility(View.VISIBLE);
+
+                    }));
+            Toast.makeText(this, "Показаны результаты поиска: " + textSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

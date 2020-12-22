@@ -40,7 +40,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
+        setContentView(R.layout.activity_petition);
         newsHeader = findViewById(R.id.productHeader);
         newsText = findViewById(R.id.productText);
         newsBody = findViewById(R.id.productBody);
@@ -59,25 +59,25 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     (product) -> {
-                                        newsHeader.setText(product.all.name);
-                                        newsText.setText(product.all.price/100 + " ₽");
-                                        newsBody.setText(product.all.description);
+                                        newsHeader.setText(product.all.title);
+//                                        newsText.setText(product.all.price/100 + " ₽");
+                                        newsBody.setText(product.all.content);
                                         listimg = new ArrayList<>();
                                         listimg.clear();
 
-                                        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(product.all.image_A));
-                                        Glide.with(this).load(listimg.get(0).url + "").into(newsImageFull);
+//                                        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(product.all.image));
+                                        Glide.with(this).load(product.all.image + "").into(newsImageFull);
 
-                                        productCity.setText("Город: " + product.all.location.description);
+                                        //productCity.setText("Город: " + product.all.location.description);
 
 
 
                                         // Add a marker in Sydney and move the camera
-                                        LatLng sydney = new LatLng(product.all.location.latitude, product.all.location.longitude);
-                                        mMap.addMarker(new MarkerOptions()
-                                                .position(sydney)
-                                                .title("Marker in Sydney"));
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//                                        LatLng sydney = new LatLng(product.all.location.latitude, product.all.location.longitude);
+//                                        mMap.addMarker(new MarkerOptions()
+//                                                .position(sydney)
+//                                                .title("Marker in Sydney"));
+//                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                                     },
                                     (error) -> {
                                         error.printStackTrace();

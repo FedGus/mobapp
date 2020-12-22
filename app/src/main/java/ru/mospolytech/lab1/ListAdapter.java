@@ -2,7 +2,6 @@ package ru.mospolytech.lab1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     Context context;
@@ -34,7 +31,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_detail, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.petition_detail, parent, false);
         return new ViewHolder(view);
     }
 
@@ -43,12 +40,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         ProductDetail news = list.get(position);
         listimg = new ArrayList<>();
         listimg.clear();
-        holder.factIdText.setText(news.name);
-        holder.sourceView.setText("Просмотров: "+ news.views);
-        holder.dateNews.setText(news.price/100 + " ₽" );
-
-        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image_A));
-        Glide.with(context).load( listimg.get(0).url+ "").into(holder.factImage);
+        holder.factIdText.setText(news.title);
+        holder.sourceView.setText("Просмотров: "+ news.timestamp);
+//        holder.dateNews.setText(news.price/100 + " ₽" );
+//
+//        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
+        Glide.with(context).load( news.image+ "").into(holder.factImage);
 
 
         holder.item.setOnClickListener(v -> {

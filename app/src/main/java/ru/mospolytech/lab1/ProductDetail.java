@@ -7,24 +7,21 @@ import java.util.List;
 
 public class ProductDetail {
 
-    @SerializedName("id")
-    String id;
+    @SerializedName("id_petition")
+    int id;
 
-    @SerializedName("name")
-    String name;
+    @SerializedName("title")
+    String title;
 
-    @SerializedName("description")
-    String description;
+    @SerializedName("content")
+    String content;
 
-    @SerializedName("price")
-    int price;
+    @SerializedName("image")
+    String image;
 
-    @SerializedName("images")
-    List<Images> image_A;
+//    @SerializedName("location")
+//    Locations location;
 
-    @SerializedName("location")
-    Locations location;
-
-    @SerializedName("views")
-    String views;
+    @SerializedName("timestamp")
+    String timestamp;
 }

@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiConfiguration {
 
-    public static final String BASE_URL = "https://api.youla.io/";
+    public static final String BASE_URL = "http://comfortable-city.std-709.ist.mospolytech.ru/";
 
     private static ApiInterface api;
     private static ApiConfiguration mInstance;

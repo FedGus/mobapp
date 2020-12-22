@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    @GET("api/v1/products")
+    @GET("api/petitions")
     Observable<ProductsList> productlist(@Query("search") String search);
 
     @GET("api/v1/product/{id}")
