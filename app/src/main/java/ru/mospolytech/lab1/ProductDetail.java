@@ -8,7 +8,7 @@ import java.util.List;
 public class ProductDetail {
 
     @SerializedName("id_petition")
-    int id;
+    int id_petition;
 
     @SerializedName("title")
     String title;
@@ -19,8 +19,14 @@ public class ProductDetail {
     @SerializedName("image")
     String image;
 
-//    @SerializedName("location")
-//    Locations location;
+    @SerializedName("latitude")
+    String latitude;
+
+    @SerializedName("longitude")
+    String longitude;
+
+    @SerializedName("address")
+    String address;
 
     @SerializedName("timestamp")
     String timestamp;

@@ -33,7 +33,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     ImageView newsImageFull;
     ApiInterface api;
     private CompositeDisposable disposables;
-
+    List<ProductDetail> list;
     List<Images> listimg;
     private GoogleMap mMap;
 
@@ -54,30 +54,34 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
 
         if (getIntent().getExtras() != null){
             disposables.add(
-                    api.product(getIntent().getStringExtra("id"))
+                    api.product(getIntent().getIntExtra("id_petition",4))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     (product) -> {
-                                        newsHeader.setText(product.all.title);
-//                                        newsText.setText(product.all.price/100 + " ₽");
-                                        newsBody.setText(product.all.content);
                                         listimg = new ArrayList<>();
                                         listimg.clear();
 
-//                                        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(product.all.image));
-                                        Glide.with(this).load(product.all.image + "").into(newsImageFull);
 
-                                        //productCity.setText("Город: " + product.all.location.description);
+
+                                        newsHeader.setText(product.all.get(0).title);
+                                        //newsText.setText(product.all.price/100 + " ₽");
+                                        newsBody.setText(product.all.get(0).content);
+
+
+
+                                        Glide.with(this).load(product.all.get(0).image + "").into(newsImageFull);
+
+                                        productCity.setText("Адрес: " + product.all.get(0).address);
 
 
 
                                         // Add a marker in Sydney and move the camera
-//                                        LatLng sydney = new LatLng(product.all.location.latitude, product.all.location.longitude);
-//                                        mMap.addMarker(new MarkerOptions()
-//                                                .position(sydney)
-//                                                .title("Marker in Sydney"));
-//                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                                        LatLng sydney = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));
+                                        mMap.addMarker(new MarkerOptions()
+                                                .position(sydney)
+                                                .title("Marker in Sydney"));
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
                                     },
                                     (error) -> {
                                         error.printStackTrace();

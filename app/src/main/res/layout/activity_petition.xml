@@ -60,7 +60,7 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                app:cameraZoom="13"
+                app:cameraZoom="17"
                 tools:context=".MapsActivity" />
 
             <TextView

@@ -50,7 +50,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         holder.item.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductActivity.class);
-            intent.putExtra("id", news.id);
+            intent.putExtra("id_petition", news.id_petition);
             context.startActivity(intent);
         });
     }
