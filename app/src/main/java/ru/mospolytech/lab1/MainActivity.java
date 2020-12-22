@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
     public void onClick(View view){
         if (textSearch.getText().toString().isEmpty()){
             list.clear();
@@ -85,6 +84,11 @@ public class MainActivity extends AppCompatActivity  {
                     }));
             Toast.makeText(this, "Показаны результаты поиска: " + textSearch.getText().toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onClickMap(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
+        this.startActivity(intent);
     }
 
 }
