@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ApiInterface api;
     private CompositeDisposable disposables;
     private GoogleMap mMap;
+    private UiSettings mUiSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     list.addAll(productsList.all);
                     adapter.notifyDataSetChanged();
                     for (int lol = 0 ; lol < list.size(); lol++) {
-                        LatLng pin = new LatLng(Double.parseDouble(list.get(lol).latitude), Double.parseDouble(list.get(0).longitude));
+                        LatLng pin = new LatLng(Double.parseDouble(list.get(lol).latitude), Double.parseDouble(list.get(lol).longitude));
                         mMap.addMarker(new MarkerOptions()
                                 .position(pin)
-                                .title("Marker in Sydney"));
+                                .title(list.get(lol).title));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
                     }
                 }, (error) -> {
@@ -109,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void onClickMap(View view) {
-        Intent intent = new Intent(this, MapActivity.class);
-        this.startActivity(intent);
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mUiSettings = mMap.getUiSettings();
+
+        // Keep the UI Settings state in sync with the checkboxes.
+        mUiSettings.setZoomControlsEnabled(true);
     }
 
     @Override

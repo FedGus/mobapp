@@ -14,8 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
@@ -42,8 +46,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         listimg = new ArrayList<>();
         listimg.clear();
         holder.factIdText.setText(news.title);
-        holder.sourceView.setText("Просмотров: "+ news.timestamp);
-//        holder.dateNews.setText(news.price/100 + " ₽" );
+        String dtStart = news.timestamp;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
+        try {
+            Date date = dateFormat.parse(dtStart);
+            holder.sourceView.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.dateNews.setText(news.address);
 //
 //        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
         Glide.with(context).load( news.image+ "").into(holder.factImage);
