@@ -1,4 +1,4 @@
-package ru.mospolytech.lab1.ui.gallery;
+package ru.mospolytech.lab1;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 
 import ru.mospolytech.lab1.R;
+import ru.mospolytech.lab1.ui.gallery.GalleryViewModel;
 
 public class GalleryFragment extends Fragment {
 
@@ -24,13 +25,7 @@ public class GalleryFragment extends Fragment {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

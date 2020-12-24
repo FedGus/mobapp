@@ -35,7 +35,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback  {
 
-    final String TAG = "A";
     EditText textSearch;
     RecyclerView recyclerView;
     ListAdapter adapter;
@@ -44,8 +43,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback  {
     CompositeDisposable disposables;
     GoogleMap mMap = null;
     UiSettings mUiSettings;
-
-    private HomeViewModel homeViewModel;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -97,6 +94,33 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback  {
                     root.findViewById(R.id.list).setVisibility(View.VISIBLE);
 
                 }));
+
+               textSearch.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View view) {
+                       if (textSearch.getText().toString().isEmpty()) {
+                           list.clear();
+                       } else {
+                           disposables.add(api.productlist(textSearch.getText().toString())
+                                   .subscribeOn(Schedulers.io())
+                                   .observeOn(AndroidSchedulers.mainThread())
+                                   .subscribe((productsList) -> {
+                                       root.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                       root.findViewById(R.id.list).setVisibility(View.VISIBLE);
+                                       list.clear();
+                                       list.addAll(productsList.all);
+                                       adapter.notifyDataSetChanged();
+                                   }, (error) -> {
+                                       Toast.makeText(getContext(), "При поиске возникла ошибка:\n" + error.getMessage(),
+                                               Toast.LENGTH_LONG).show();
+                                       root.findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                       root.findViewById(R.id.list).setVisibility(View.VISIBLE);
+
+                                   }));
+                           Toast.makeText(getContext(), "Показаны результаты поиска: " + textSearch.getText().toString(), Toast.LENGTH_SHORT).show();
+                       }
+                   }
+               });
 
         return root;
     }

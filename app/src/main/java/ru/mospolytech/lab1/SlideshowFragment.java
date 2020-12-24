@@ -1,4 +1,4 @@
-package ru.mospolytech.lab1.ui.slideshow;
+package ru.mospolytech.lab1;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import ru.mospolytech.lab1.R;
+import ru.mospolytech.lab1.ui.slideshow.SlideshowViewModel;
 
 
 public class SlideshowFragment extends Fragment {
@@ -24,13 +25,7 @@ public class SlideshowFragment extends Fragment {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(SlideshowViewModel.class);
         View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
         return root;
     }
 }

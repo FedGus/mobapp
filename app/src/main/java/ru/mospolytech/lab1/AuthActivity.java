@@ -55,7 +55,7 @@ public class AuthActivity extends AppCompatActivity {
                     textViewLogin.setText("Code: " + response.code());
                     return;
                 }
-                textViewLogin.setText("");
+                textViewLogin.setText(" ");
                 Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                 startActivity(intent);
             }

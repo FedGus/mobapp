@@ -8,23 +8,6 @@
     android:orientation="vertical"
     tools:context=".HomeFragment">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/logo" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="Петиции"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -61,6 +44,7 @@
                 android:inputType="textPersonName"
                 android:onClick="onClick"
                 android:padding="8dp"
+                android:elevation="2dp"
                 android:textSize="14sp" />
 
         </LinearLayout>
