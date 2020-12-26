@@ -18,4 +18,7 @@ public interface ApiInterface {
 
     @POST("api/login")
     Call<Auth> auth(@Body Auth auth);
+
+    @POST("api/add-petition")
+    Call<Petition> petition(@Body Petition petition);
 }
