@@ -88,30 +88,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback  {
                                 .title(list.get(lol).title));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
                     }
-
-                    mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                        @Override
-                        public void onMapClick(LatLng latLng) {
-                            // Creating a marker
-                            MarkerOptions markerOptions = new MarkerOptions();
-
-                            // Setting the position for the marker
-                            markerOptions.position(latLng);
-
-                            // Setting the title for the marker.
-                            // This will be displayed on taping the marker
-                            markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-
-                            // Clears the previously touched position
-                            mMap.clear();
-
-                            // Animating to the touched position
-                            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                            // Placing a marker on the touched position
-                            mMap.addMarker(markerOptions);
-                        }
-                    });
                 }, (error) -> {
                     Toast.makeText(getContext(), "При поиске возникла ошибка:\n" + error.getMessage(),
                             Toast.LENGTH_LONG).show();

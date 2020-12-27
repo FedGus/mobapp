@@ -21,4 +21,7 @@ public interface ApiInterface {
 
     @POST("api/add-petition")
     Call<Petition> petition(@Body Petition petition);
+
+    @GET("api/getPetitionComment/{id_petition}")
+    Observable<CommentsList> comment(@Path("id_petition") int id_petition);
 }

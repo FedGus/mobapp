@@ -2,20 +2,13 @@ package ru.mospolytech.lab1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,9 +39,11 @@ public class AuthActivity extends AppCompatActivity {
     private void authLogin() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
-        Auth auth = new Auth(login.getText().toString(), password.getText().toString());
+        Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "");
         Call<Auth> call = api.auth(auth);
         call.enqueue(new Callback<Auth>() {
+            private static final String TAG = "A";
+
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if(!response.isSuccessful()) {
@@ -56,6 +51,9 @@ public class AuthActivity extends AppCompatActivity {
                     return;
                 }
                 textViewLogin.setText(" ");
+                App appState = ((App)getApplicationContext());
+                appState.setState(response.body().getId_user(), response.body().getName() , response.body().getSurname(), response.body().getLogin());
+
                 Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                 startActivity(intent);
             }

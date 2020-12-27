@@ -1,9 +1,12 @@
 package ru.mospolytech.lab1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +36,9 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     ImageView newsImageFull;
     ApiInterface api;
     private CompositeDisposable disposables;
-    List<ProductDetail> list;
+    RecyclerView recyclerView;
+    CommentAdapter adapter;
+    List<Comment> listComment;
     List<Images> listimg;
     private GoogleMap mMap;
 
@@ -49,6 +54,12 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        listComment = new ArrayList<>();
+        adapter = new CommentAdapter(this, listComment);
+        recyclerView = findViewById(R.id.list);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
 
@@ -77,6 +88,21 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         error.printStackTrace();
                                         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
                                     }));
+
+            disposables.add(api.comment(getIntent().getIntExtra("id_petition",4))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((commentsList) -> {
+                        findViewById(R.id.list).setVisibility(View.VISIBLE);
+                        listComment.clear();
+                        listComment.addAll(commentsList.all);
+                        adapter.notifyDataSetChanged();
+                    }, (error) -> {
+                        Toast.makeText(this, "При загрузке комментариев произошла ошибка:\n" + error.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                        findViewById(R.id.list).setVisibility(View.VISIBLE);
+
+                    }));
         }
     }
 

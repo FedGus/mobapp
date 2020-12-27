@@ -1,7 +1,6 @@
 package ru.mospolytech.lab1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     Context context;
-    List<ProductDetail> list;
+    List<Comment> list;
     List<Images> listimg;
 
 
-    public ListAdapter(Context context, List<ProductDetail> list){
+    public CommentAdapter(Context context, List<Comment> list){
         this.context = context;
         this.list = list;
     }
@@ -36,35 +29,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_petition, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_comment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ProductDetail news = list.get(position);
+        Comment comment = list.get(position);
         listimg = new ArrayList<>();
         listimg.clear();
-        holder.factIdText.setText(news.title);
-        String dtStart = news.timestamp;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
-        try {
-            Date date = dateFormat.parse(dtStart);
-            holder.sourceView.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        holder.dateNews.setText(news.address);
+        holder.factIdText.setText("Ольга Краснова");
+        holder.dateNews.setText(comment.content);
 //
 //        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
-        Glide.with(context).load( news.image+ "").into(holder.factImage);
-
-
-        holder.item.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ProductActivity.class);
-            intent.putExtra("id_petition", news.id_petition);
-            context.startActivity(intent);
-        });
+        //Glide.with(context).load( comment.image+ "").into(holder.factImage);
     }
 
     @Override

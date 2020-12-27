@@ -73,6 +73,47 @@
                 android:layout_height="150dp"
                 app:cameraZoom="17"
                 tools:context=".MapsActivity" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Комментарии"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="Узнайте, что думают об этой петиции другие люди, подписавшие ее, и почему описанная в петиции проблема действительно важна. Поделитесь своим мнением, оставив комментарий ниже." />
+
+            <EditText
+                android:id="@+id/content_petition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:autofillHints=""
+                android:background="@drawable/style_field"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Ваш комментарий"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:padding="10dp"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </ScrollView>
 
