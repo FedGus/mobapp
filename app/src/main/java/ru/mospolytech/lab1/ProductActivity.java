@@ -33,6 +33,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     TextView newsText;
     TextView newsBody;
     TextView productCity;
+    TextView countSign;
     ImageView newsImageFull;
     ApiInterface api;
     private CompositeDisposable disposables;
@@ -51,6 +52,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         newsBody = findViewById(R.id.productBody);
         productCity = findViewById(R.id.productCity);
         newsImageFull = findViewById(R.id.newsImageFull);
+        countSign = findViewById(R.id.countSignatures);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -73,7 +75,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         listimg = new ArrayList<>();
                                         listimg.clear();
                                         newsHeader.setText(product.all.get(0).title);
-                                        newsText.setText("Федор Гусев создал(а) эту петицию, адресованную Аэрофлот (Публичное акционерное общество «Аэрофлот — российские авиалинии»)");
+                                        newsText.setText("Федор Гусев создал(а) эту петицию, адресованную Префектуре (Префектура Северного административного округа)");
                                         newsBody.setText(product.all.get(0).content);
                                         Glide.with(this).load(product.all.get(0).image + "").into(newsImageFull);
                                         productCity.setText("Адрес: " + product.all.get(0).address);
@@ -81,13 +83,23 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         LatLng pin = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));
                                         mMap.addMarker(new MarkerOptions()
                                                 .position(pin)
-                                                .title("Marker in Sydney"));
+                                                .title("Marker"));
                                         mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
                                     },
                                     (error) -> {
                                         error.printStackTrace();
                                         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
                                     }));
+            disposables.add(api.countSignatures(getIntent().getIntExtra("id_petition",4))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((countSignatures) -> {
+                        countSign.setText(countSignatures.countSignatures + " человека подписали.\n Следующая цель: 100");
+                    }, (error) -> {
+                        Toast.makeText(this, "При загрузке подписей произошла ошибка:\n" + error.getMessage(),
+                                Toast.LENGTH_LONG).show();
+
+                    }));
 
             disposables.add(api.comment(getIntent().getIntExtra("id_petition",4))
                     .subscribeOn(Schedulers.io())

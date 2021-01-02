@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     Context context;
     List<Comment> list;
     List<Images> listimg;
 
+    ApiInterface api;
+    CompositeDisposable disposables;
 
     public CommentAdapter(Context context, List<Comment> list){
         this.context = context;
@@ -38,8 +45,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Comment comment = list.get(position);
         listimg = new ArrayList<>();
         listimg.clear();
-        holder.factIdText.setText("Ольга Краснова");
+
         holder.dateNews.setText(comment.content);
+
+
+        api = ApiConfiguration.getApi();
+        disposables = new CompositeDisposable();
+
+        disposables.add(api.commentAuthor(comment.id_comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((commentAuthor) -> {
+                    holder.factIdText.setText(commentAuthor.name + " " + commentAuthor.surname);
+                }, (error) -> {
+
+                }));
 //
 //        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
         //Glide.with(context).load( comment.image+ "").into(holder.factImage);

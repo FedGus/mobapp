@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fadeScrollbars="false"
     android:orientation="vertical"
     android:scrollbars="vertical">
@@ -57,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
                 android:textSize="16dp" />
 
             <com.google.android.gms.maps.MapView
@@ -73,6 +74,26 @@
                 android:layout_height="150dp"
                 app:cameraZoom="17"
                 tools:context=".MapsActivity" />
+
+            <TextView
+                android:id="@+id/countSignatures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/style_card"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/style_button_primary"
+                android:text="Подписать петицию"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -110,7 +131,7 @@
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp" >
+                android:layout_marginTop="8dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

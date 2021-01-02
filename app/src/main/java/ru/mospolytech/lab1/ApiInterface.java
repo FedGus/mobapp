@@ -1,5 +1,7 @@
 package ru.mospolytech.lab1;
 
+import java.security.Signature;
+
 import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -24,4 +26,10 @@ public interface ApiInterface {
 
     @GET("api/getPetitionComment/{id_petition}")
     Observable<CommentsList> comment(@Path("id_petition") int id_petition);
+
+    @GET("api/getAuthorCommentName/{id_comment}")
+    Observable<CommentAuthor> commentAuthor(@Path("id_comment") String id_comment);
+
+    @GET("api/getSignatures/{id_petition}")
+    Observable<Signatures> countSignatures(@Path("id_petition") int id_petition);
 }

@@ -82,6 +82,8 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
     CompositeDisposable disposables;
     GoogleMap mMap = null;
     UiSettings mUiSettings;
+    String Lat;
+    String Long;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -126,7 +128,8 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
                             // Setting the title for the marker.
                             // This will be displayed on taping the marker
                             markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-
+                            Lat = String.valueOf(latLng.latitude);
+                            Long = String.valueOf(latLng.longitude);
                             // Clears the previously touched position
                             mMap.clear();
 
@@ -166,10 +169,10 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         petitionObjects.add(new PetitionObject("6", "Летние кафе"));
 
         ArrayList<Recipient> recipientArrayList = new ArrayList<Recipient>();
-        recipientArrayList.add(new Recipient("2552", "Муниципалитет"));
-        recipientArrayList.add(new Recipient("2427", "Управляющая организация домовладения"));
-        recipientArrayList.add(new Recipient("2715", "Управа района"));
-        recipientArrayList.add(new Recipient("1731", "Администрация города"));
+        recipientArrayList.add(new Recipient("1", "Муниципалитет"));
+        recipientArrayList.add(new Recipient("2", "Управляющая организация домовладения"));
+        recipientArrayList.add(new Recipient("3", "Управа района"));
+        recipientArrayList.add(new Recipient("4", "Администрация города"));
 
         ArrayAdapter<Category> oneAdapter = new ArrayAdapter<Category>(getContext(), android.R.layout.simple_spinner_dropdown_item, categoryArrayList);
         ArrayAdapter<PetitionObject> twoAdapter = new ArrayAdapter<PetitionObject>(getContext(), android.R.layout.simple_spinner_dropdown_item, petitionObjects);
@@ -192,7 +195,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         private void petitionNew() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
-        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,"55.800825", "37.515259", "Москва, Новопесчаная");
+        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Москва, Новопесчаная");
         Call<Petition> call = api.petition(petition);
         call.enqueue(new Callback<Petition>() {
             @Override
