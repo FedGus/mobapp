@@ -34,6 +34,7 @@
             android:paddingTop="3dp"
             android:paddingRight="8dp"
             android:paddingBottom="3dp"
+            android:text="Ваш комментарий"
             android:textColor="#666666"
             android:textSize="14sp"
             android:textStyle="bold" />

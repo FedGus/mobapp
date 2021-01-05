@@ -127,6 +127,21 @@
                 android:padding="10dp"
                 android:textSize="18sp" />
 
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_margin="8dp"
+                android:background="@drawable/style_field"
+                android:gravity="center"
+                android:hapticFeedbackEnabled="false"
+                android:onClick="onAddComment"
+                android:paddingLeft="10dp"
+                android:text="Добавить"
+                android:textAllCaps="false"
+                android:textSize="14sp" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"

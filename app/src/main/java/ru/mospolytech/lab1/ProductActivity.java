@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,9 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -35,6 +41,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     TextView productCity;
     TextView countSign;
     ImageView newsImageFull;
+    EditText contentComment;
     ApiInterface api;
     private CompositeDisposable disposables;
     RecyclerView recyclerView;
@@ -53,6 +60,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         productCity = findViewById(R.id.productCity);
         newsImageFull = findViewById(R.id.newsImageFull);
         countSign = findViewById(R.id.countSignatures);
+        contentComment = findViewById(R.id.content_petition);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -121,6 +129,42 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+    }
+
+    public void onAddComment(View view) {
+        commentNew();
+    }
+
+    private void commentNew() {
+        api = ApiConfiguration.getApi();
+        disposables = new CompositeDisposable();
+        App appState = ((App) this.getApplicationContext());
+        if( TextUtils.isEmpty(contentComment.getText())){
+            contentComment.setError( "Заполните поле комментария!" );
+        }else{
+            Comment comment = new Comment(appState.getIdState(), contentComment.getText().toString(), "", getIntent().getIntExtra("id_petition",4));
+            listComment.add(comment);
+            contentComment.setText("");
+            Call<Comment> call = api.commentAdd(comment);
+            call.enqueue(new Callback<Comment>() {
+                @Override
+                public void onResponse(Call<Comment> call, Response<Comment> response) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Что-то пошло не так!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+
+                @Override
+                public void onFailure(Call<Comment> call, Throwable t) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Ваш комментарий успешно опубликован!", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                }
+
+            });
+        }
+
     }
 
     @Override

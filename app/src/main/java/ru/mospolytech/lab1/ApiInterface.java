@@ -32,4 +32,7 @@ public interface ApiInterface {
 
     @GET("api/getSignatures/{id_petition}")
     Observable<Signatures> countSignatures(@Path("id_petition") int id_petition);
+
+    @POST("api/addComment")
+    Call<Comment> commentAdd(@Body Comment comment);
 }
