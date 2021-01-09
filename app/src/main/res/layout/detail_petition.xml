@@ -17,6 +17,7 @@
         android:layout_width="500px"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@mipmap/ic_image_foreground"
         android:scaleType="center" />
 
     <LinearLayout

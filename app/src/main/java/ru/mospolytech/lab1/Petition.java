@@ -2,7 +2,7 @@ package ru.mospolytech.lab1;
 
 public class Petition {
     private String title;
-    private String image;
+    private String filename;
     private String content;
     private int id_category;
     private int id_object;
@@ -12,9 +12,9 @@ public class Petition {
     private String longitude;
     private String address;
 
-    public Petition(String title, String image, String content, int id_category, int id_object, int id_status, int id_user, String latitude, String longitude, String address) {
+    public Petition(String title, String filename, String content, int id_category, int id_object, int id_status, int id_user, String latitude, String longitude, String address) {
         this.title = title;
-        this.image = image;
+        this.filename = filename;
         this.content = content;
         this.id_category = id_category;
         this.id_object = id_object;
@@ -29,8 +29,8 @@ public class Petition {
         return title;
     }
 
-    public String getImage() {
-        return image;
+    public String getFilename() {
+        return filename;
     }
 
     public String getContent() {

@@ -57,7 +57,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         holder.dateNews.setText(news.address);
 //
 //        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
-        Glide.with(context).load( news.image+ "").into(holder.factImage);
+        Glide.with(context).load( news.filename + "").into(holder.factImage);
 
 
         holder.item.setOnClickListener(v -> {

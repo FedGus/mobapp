@@ -16,8 +16,8 @@ public class ProductDetail {
     @SerializedName("content")
     String content;
 
-    @SerializedName("image")
-    String image;
+    @SerializedName("filename")
+    String filename;
 
     @SerializedName("latitude")
     String latitude;

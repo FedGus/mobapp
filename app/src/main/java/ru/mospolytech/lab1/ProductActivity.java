@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,8 +29,6 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ProductActivity extends AppCompatActivity implements OnMapReadyCallback{
     TextView newsHeader;
@@ -85,7 +81,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         newsHeader.setText(product.all.get(0).title);
                                         newsText.setText("Федор Гусев создал(а) эту петицию, адресованную Префектуре (Префектура Северного административного округа)");
                                         newsBody.setText(product.all.get(0).content);
-                                        Glide.with(this).load(product.all.get(0).image + "").into(newsImageFull);
+                                        Glide.with(this).load(product.all.get(0).filename + "").into(newsImageFull);
                                         productCity.setText("Адрес: " + product.all.get(0).address);
                                         // Add a marker and move the camera
                                         LatLng pin = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));

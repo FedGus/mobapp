@@ -3,6 +3,7 @@ package ru.mospolytech.lab1;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,6 +22,10 @@ import ru.mospolytech.lab1.R;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    View mHeaderView;
+
+    TextView textViewUsername;
+    TextView textViewEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,22 @@ public class MainActivity extends AppCompatActivity {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
+        mHeaderView =  navigationView.getHeaderView(0); //получение хедера бокового меню для отображения логина и ФИО
+
+        // View
+        textViewUsername = (TextView) mHeaderView.findViewById(R.id.nav_name_surname);
+        textViewEmail= (TextView) mHeaderView.findViewById(R.id.nav_login);
+
+        App appState = ((App) this.getApplicationContext());
+        String surnameState = appState.getSurnameState();
+        String nameState = appState.getNameState();
+        String login = appState.getLoginState();
+
+        // Set username & email
+        textViewUsername.setText(nameState + " " + surnameState);
+        textViewEmail.setText(login);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(

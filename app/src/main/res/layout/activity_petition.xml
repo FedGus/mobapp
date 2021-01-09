@@ -23,8 +23,10 @@
                 android:id="@+id/newsImageFull"
                 android:layout_width="match_parent"
                 android:layout_height="235dp"
-                android:scaleType="center"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:srcCompat="@mipmap/ic_image_foreground" />
 
             <TextView
                 android:id="@+id/productHeader"
