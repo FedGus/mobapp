@@ -94,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/style_button_primary"
+                android:onClick="onAddSignature"
                 android:text="Подписать петицию"
                 android:textColor="#FFFFFF" />
 

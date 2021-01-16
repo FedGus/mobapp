@@ -39,6 +39,8 @@ public class AuthActivity extends AppCompatActivity {
     private void authLogin() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
+        findViewById(R.id.progressAuth).setVisibility(View.VISIBLE);
+
         Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "");
         Call<Auth> call = api.auth(auth);
         call.enqueue(new Callback<Auth>() {
@@ -53,7 +55,6 @@ public class AuthActivity extends AppCompatActivity {
                 textViewLogin.setText(" ");
                 App appState = ((App)getApplicationContext());
                 appState.setState(response.body().getId_user(), response.body().getName() , response.body().getSurname(), response.body().getLogin());
-
                 Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -61,6 +62,7 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Auth> call, Throwable t) {
                 textViewLogin.setText("Логин или пароль введены неверно");
+                findViewById(R.id.progressAuth).setVisibility(View.GONE);
             }
         });
     }

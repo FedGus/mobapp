@@ -2,12 +2,14 @@ package ru.mospolytech.lab1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +23,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static android.content.ContentValues.TAG;
+
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     Context context;
     List<ProductDetail> list;
     List<Images> listimg;
-
+    ApiInterface api;
+    private CompositeDisposable disposables;
 
     public ListAdapter(Context context, List<ProductDetail> list){
         this.context = context;
@@ -43,8 +52,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductDetail news = list.get(position);
-        listimg = new ArrayList<>();
-        listimg.clear();
+        api = ApiConfiguration.getApi();
+        disposables = new CompositeDisposable();
         holder.factIdText.setText(news.title);
         String dtStart = news.timestamp;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
@@ -55,9 +64,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             e.printStackTrace();
         }
         holder.dateNews.setText(news.address);
-//
+
+        Glide.with(context).load( "http://comfortable-city.std-709.ist.mospolytech.ru/api/photo/" + news.filename).into(holder.factImage);
+
+       
 //        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
-        Glide.with(context).load( news.filename + "").into(holder.factImage);
+
 
 
         holder.item.setOnClickListener(v -> {

@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +32,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductActivity extends AppCompatActivity implements OnMapReadyCallback{
+import static android.content.ContentValues.TAG;
+
+public class ProductActivity extends AppCompatActivity implements OnMapReadyCallback {
     TextView newsHeader;
     TextView newsText;
     TextView newsBody;
@@ -69,9 +73,9 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             disposables.add(
-                    api.product(getIntent().getIntExtra("id_petition",4))
+                    api.product(getIntent().getIntExtra("id_petition", 4))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
@@ -81,7 +85,12 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         newsHeader.setText(product.all.get(0).title);
                                         newsText.setText("Федор Гусев создал(а) эту петицию, адресованную Префектуре (Префектура Северного административного округа)");
                                         newsBody.setText(product.all.get(0).content);
-                                        Glide.with(this).load(product.all.get(0).filename + "").into(newsImageFull);
+
+
+                                        Glide.with(this).load("http://comfortable-city.std-709.ist.mospolytech.ru/api/photo/" + product.all.get(0).filename).into(newsImageFull);
+
+
+                                        //Glide.with(this).load(product.all.get(0).filename + "").into(newsImageFull);
                                         productCity.setText("Адрес: " + product.all.get(0).address);
                                         // Add a marker and move the camera
                                         LatLng pin = new LatLng(Double.parseDouble(product.all.get(0).latitude), Double.parseDouble(product.all.get(0).longitude));
@@ -94,7 +103,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                                         error.printStackTrace();
                                         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
                                     }));
-            disposables.add(api.countSignatures(getIntent().getIntExtra("id_petition",4))
+            disposables.add(api.countSignatures(getIntent().getIntExtra("id_petition", 4))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((countSignatures) -> {
@@ -105,7 +114,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
 
                     }));
 
-            disposables.add(api.comment(getIntent().getIntExtra("id_petition",4))
+            disposables.add(api.comment(getIntent().getIntExtra("id_petition", 4))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((commentsList) -> {
@@ -131,14 +140,23 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         commentNew();
     }
 
+    public void onAddSignature(View view) {
+        signatureNew();
+    }
+
+    private void showOk() {
+        Intent okIntent = new Intent(this, OkActivity.class);
+        this.startActivity(okIntent);
+    }
+
     private void commentNew() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
         App appState = ((App) this.getApplicationContext());
-        if( TextUtils.isEmpty(contentComment.getText())){
-            contentComment.setError( "Заполните поле комментария!" );
-        }else{
-            Comment comment = new Comment(appState.getIdState(), contentComment.getText().toString(), "", getIntent().getIntExtra("id_petition",4));
+        if (TextUtils.isEmpty(contentComment.getText())) {
+            contentComment.setError("Заполните поле комментария!");
+        } else {
+            Comment comment = new Comment(appState.getIdState(), contentComment.getText().toString(), "", getIntent().getIntExtra("id_petition", 4));
             listComment.add(comment);
             contentComment.setText("");
             Call<Comment> call = api.commentAdd(comment);
@@ -155,11 +173,34 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Ваш комментарий успешно опубликован!", Toast.LENGTH_SHORT);
                     toast.show();
-
                 }
 
             });
         }
+
+    }
+
+    private void signatureNew() {
+        api = ApiConfiguration.getApi();
+        disposables = new CompositeDisposable();
+        App appState = ((App) this.getApplicationContext());
+        Signatures signature = new Signatures(getIntent().getIntExtra("id_petition", 4), appState.getIdState());
+        Call<Signatures> call = api.signatureAdd(signature);
+        call.enqueue(new Callback<Signatures>() {
+            @Override
+            public void onResponse(Call<Signatures> call, Response<Signatures> response) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Что-то пошло не так!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void onFailure(Call<Signatures> call, Throwable t) {
+                showOk();
+            }
+
+        });
+
 
     }
 
