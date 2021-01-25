@@ -33,6 +33,9 @@ public interface ApiInterface {
     @GET("api/getSignatures/{id_petition}")
     Observable<Signatures> countSignatures(@Path("id_petition") int id_petition);
 
+    @GET("api/getUserSignature/{id_petition}/{id_user}")
+    Observable<Signatures> getSignature(@Path("id_petition") int id_petition, @Path("id_user") int id_user);
+
     @POST("api/addSignature")
     Call<Signatures> signatureAdd(@Body Signatures signature);
 

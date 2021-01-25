@@ -5,10 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,7 +36,7 @@ import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
-public class ProductActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class PetitionActivity extends AppCompatActivity implements OnMapReadyCallback {
     TextView newsHeader;
     TextView newsText;
     TextView newsBody;
@@ -42,6 +44,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
     TextView countSign;
     ImageView newsImageFull;
     EditText contentComment;
+    Button buttonSignature;
     ApiInterface api;
     private CompositeDisposable disposables;
     RecyclerView recyclerView;
@@ -59,6 +62,7 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
         newsBody = findViewById(R.id.productBody);
         productCity = findViewById(R.id.productCity);
         newsImageFull = findViewById(R.id.newsImageFull);
+        buttonSignature = findViewById(R.id.buttonSignature);
         countSign = findViewById(R.id.countSignatures);
         contentComment = findViewById(R.id.content_petition);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -112,6 +116,17 @@ public class ProductActivity extends AppCompatActivity implements OnMapReadyCall
                         Toast.makeText(this, "При загрузке подписей произошла ошибка:\n" + error.getMessage(),
                                 Toast.LENGTH_LONG).show();
 
+                    }));
+            App appState = ((App) this.getApplicationContext());
+            disposables.add(api.getSignature(getIntent().getIntExtra("id_petition", 4), appState.getIdState())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((getSignature) -> {
+                        buttonSignature.setText("Вы подписали эту петицию");
+                        buttonSignature.setTextColor(Color.parseColor("#e4e4e4"));
+                        buttonSignature.setEnabled(false);
+                    }, (error) -> {
+                        buttonSignature.setText("Подписать петицию");
                     }));
 
             disposables.add(api.comment(getIntent().getIntExtra("id_petition", 4))

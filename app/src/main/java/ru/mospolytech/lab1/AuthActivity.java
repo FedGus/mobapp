@@ -21,8 +21,6 @@ public class AuthActivity extends AppCompatActivity {
     ApiInterface api;
     private CompositeDisposable disposables;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +38,11 @@ public class AuthActivity extends AppCompatActivity {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
         findViewById(R.id.progressAuth).setVisibility(View.VISIBLE);
+        findViewById(R.id.button).setVisibility(View.GONE);
 
         Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "");
         Call<Auth> call = api.auth(auth);
         call.enqueue(new Callback<Auth>() {
-            private static final String TAG = "A";
-
             @Override
             public void onResponse(Call<Auth> call, Response<Auth> response) {
                 if(!response.isSuccessful()) {
@@ -63,6 +60,7 @@ public class AuthActivity extends AppCompatActivity {
             public void onFailure(Call<Auth> call, Throwable t) {
                 textViewLogin.setText("Логин или пароль введены неверно");
                 findViewById(R.id.progressAuth).setVisibility(View.GONE);
+                findViewById(R.id.button).setVisibility(View.VISIBLE);
             }
         });
     }

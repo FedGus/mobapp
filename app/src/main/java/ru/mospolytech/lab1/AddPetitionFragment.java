@@ -109,7 +109,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((productsList) -> {
-                        LatLng pin = new LatLng(55.805046, 37.514796);
+                        LatLng pin = new LatLng(52.03124688643826, 29.21152171202293);
                         mMap.addMarker(new MarkerOptions()
                                 .position(pin)
                                 .title("list.get(lol).title"));
@@ -195,7 +195,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         private void petitionNew() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
-        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Москва, Новопесчаная");
+        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Мозырь, бул. Юности");
         Call<Petition> call = api.petition(petition);
         call.enqueue(new Callback<Petition>() {
             @Override
