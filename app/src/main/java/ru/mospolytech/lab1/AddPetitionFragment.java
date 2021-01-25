@@ -82,8 +82,8 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
     CompositeDisposable disposables;
     GoogleMap mMap = null;
     UiSettings mUiSettings;
-    String Lat;
-    String Long;
+    String Lat = "52.03124688643826";
+    String Long = "29.21152171202293";
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -112,7 +112,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
                         LatLng pin = new LatLng(52.03124688643826, 29.21152171202293);
                         mMap.addMarker(new MarkerOptions()
                                 .position(pin)
-                                .title("list.get(lol).title"));
+                                .title(pin.toString()));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
 
 
@@ -205,7 +205,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
 
             @Override
             public void onFailure(Call<Petition> call, Throwable t) {
-                Intent mainIntent = new Intent(getContext(), OkActivity.class);
+                Intent mainIntent = new Intent(getContext(), ThanksActivity.class);
                 getActivity().startActivity(mainIntent);
             }
 
@@ -213,120 +213,3 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
     }
 }
 
-
-
-
-//public class AddPetitionFragment extends Fragment implements OnMapReadyCallback {
-//
-//    ApiInterface api;
-//    CompositeDisposable disposables;
-//    EditText petitonName;
-//    EditText petitonContent;
-//    TextView activity_title;
-//    private GoogleMap mMap;
-//    UiSettings mUiSettings;
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        mUiSettings = mMap.getUiSettings();
-//
-//        // Keep the UI Settings state in sync with the checkboxes.
-//        mUiSettings.setZoomControlsEnabled(true);
-//    }
-//
-//    public void onMapClick(LatLng latLng) {
-//        // Creating a marker
-//        MarkerOptions markerOptions = new MarkerOptions();
-//
-//        // Setting the position for the marker
-//        markerOptions.position(latLng);
-//
-//        // Setting the title for the marker.
-//        // This will be displayed on taping the marker
-//        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-//
-//        // Clears the previously touched position
-//        mMap.clear();
-//
-//        // Animating to the touched position
-//        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-//
-//        // Placing a marker on the touched position
-//        mMap.addMarker(markerOptions);
-//    }
-//
-//    public View onCreateView(@NonNull LayoutInflater inflater,
-//                             ViewGroup container, Bundle savedInstanceState) {
-//
-//        View root = inflater.inflate(R.layout.fragment_add_petition, container, false);
-//
-//        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
-//
-//        Spinner categorySpinner = root.findViewById(R.id.spinner_category);
-//        Spinner objectSpinner = root.findViewById(R.id.spinner_object);
-//        Spinner recipientObject = root.findViewById(R.id.spinner_recipient);
-//        Button addPetition = root.findViewById(R.id.buttonAdd);
-//        petitonName = root.findViewById(R.id.name_petition);
-//        petitonContent = root.findViewById(R.id.content_petition);
-//        activity_title = root.findViewById(R.id.activity_title);
-//
-//        ArrayList<Category> categoryArrayList = new ArrayList<Category>();
-//        categoryArrayList.add(new Category("1", "Ремонт и реконструкция"));
-//        categoryArrayList.add(new Category("2", "Благоустройство"));
-//        categoryArrayList.add(new Category("3", "Озеленение"));
-//        categoryArrayList.add(new Category("4", "Освещение"));
-//
-//        ArrayList<PetitionObject> petitionObjects = new ArrayList<PetitionObject>();
-//        petitionObjects.add(new PetitionObject("1", "Дворовые территории"));
-//        petitionObjects.add(new PetitionObject("2", "Многоквартирные дома"));
-//        petitionObjects.add(new PetitionObject("3", "Дороги"));
-//        petitionObjects.add(new PetitionObject("4", "Поликлиники"));
-//        petitionObjects.add(new PetitionObject("5", "Парки"));
-//        petitionObjects.add(new PetitionObject("6", "Летние кафе"));
-//
-//        ArrayList<Recipient> recipientArrayList = new ArrayList<Recipient>();
-//        recipientArrayList.add(new Recipient("2552", "Муниципалитет"));
-//        recipientArrayList.add(new Recipient("2427", "Управляющая организация домовладения"));
-//        recipientArrayList.add(new Recipient("2715", "Управа района"));
-//        recipientArrayList.add(new Recipient("1731", "Администрация города"));
-//
-//        ArrayAdapter<Category> oneAdapter = new ArrayAdapter<Category>(getContext(), android.R.layout.simple_spinner_dropdown_item, categoryArrayList);
-//        ArrayAdapter<PetitionObject> twoAdapter = new ArrayAdapter<PetitionObject>(getContext(), android.R.layout.simple_spinner_dropdown_item, petitionObjects);
-//        ArrayAdapter<Recipient> threeAdapter = new ArrayAdapter<Recipient>(getContext(), android.R.layout.simple_spinner_dropdown_item, recipientArrayList);
-//
-//        categorySpinner.setAdapter(oneAdapter);
-//        objectSpinner.setAdapter(twoAdapter);
-//        recipientObject.setAdapter(threeAdapter);
-//
-//        addPetition.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                petitionNew();
-//            }
-//        });
-//
-//        return root;
-//    }
-//
-//    private void petitionNew() {
-//        api = ApiConfiguration.getApi();
-//        disposables = new CompositeDisposable();
-//        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,"55.800825", "37.515259", "Москва, Новопесчаная");
-//        Call<Petition> call = api.petition(petition);
-//        call.enqueue(new Callback<Petition>() {
-//            @Override
-//            public void onResponse(Call<Petition> call, Response<Petition> response) {
-//                activity_title.setText("Все хорошо");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Petition> call, Throwable t) {
-//                activity_title.setText("Все плохо");
-//            }
-//
-//        });
-//    }
-//}
