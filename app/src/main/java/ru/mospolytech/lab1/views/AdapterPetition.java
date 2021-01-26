@@ -29,12 +29,12 @@ import ru.mospolytech.lab1.classes.Images;
 public class AdapterPetition extends RecyclerView.Adapter<AdapterPetition.ViewHolder> {
 
     Context context;
-    List<SerializerProductDetail> list;
+    List<SerializerPetitionDetail> list;
     List<Images> listimg;
     ApiInterface api;
     private CompositeDisposable disposables;
 
-    public AdapterPetition(Context context, List<SerializerProductDetail> list){
+    public AdapterPetition(Context context, List<SerializerPetitionDetail> list){
         this.context = context;
         this.list = list;
     }
@@ -48,7 +48,7 @@ public class AdapterPetition extends RecyclerView.Adapter<AdapterPetition.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SerializerProductDetail news = list.get(position);
+        SerializerPetitionDetail news = list.get(position);
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
         holder.factIdText.setText(news.title);

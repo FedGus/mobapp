@@ -35,7 +35,7 @@ public class FragmentHome extends Fragment implements OnMapReadyCallback  {
     EditText textSearch;
     RecyclerView recyclerView;
     AdapterPetition adapter;
-    List<SerializerProductDetail> list;
+    List<SerializerPetitionDetail> list;
     ApiInterface api;
     CompositeDisposable disposables;
     GoogleMap mMap = null;

@@ -30,12 +30,16 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         textViewLogin  = findViewById(R.id.textViewLogin);
-        login  = findViewById(R.id.login);
-        password  = findViewById(R.id.password);
+        login  = findViewById(R.id.nameField);
+        password  = findViewById(R.id.passwordField);
     }
 
     public void onClick(View view) {
         authLogin();
+    }
+    public void onRegistration(View view) {
+        Intent intent = new Intent(AuthActivity.this, RegistrationActivity.class);
+        startActivity(intent);
     }
 
     private void authLogin() {
@@ -44,7 +48,7 @@ public class AuthActivity extends AppCompatActivity {
         findViewById(R.id.progressAuth).setVisibility(View.VISIBLE);
         findViewById(R.id.button).setVisibility(View.GONE);
 
-        Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "");
+        Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "", 1);
         Call<Auth> call = api.auth(auth);
         call.enqueue(new Callback<Auth>() {
             @Override

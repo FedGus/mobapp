@@ -23,6 +23,7 @@
             android:value="AIzaSyAuQ5_76dk3qog1GaS5UYyCNMIZ3KnG_Gk"/>
         <activity android:name=".views.ActivityPetition"></activity>
         <activity android:name=".activities.AuthActivity"></activity>
+        <activity android:name=".activities.RegistrationActivity"></activity>
         <activity android:name=".activities.OkActivity"></activity>
         <activity android:name=".activities.ThanksActivity"></activity>
         <activity

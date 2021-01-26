@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-public class SerializerProductDetail {
+public class SerializerPetitionDetail {
 
     @SerializedName("id_petition")
     int id_petition;

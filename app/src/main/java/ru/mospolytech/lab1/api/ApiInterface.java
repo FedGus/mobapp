@@ -10,7 +10,7 @@ import retrofit2.http.Query;
 import ru.mospolytech.lab1.views.SerializerComment;
 import ru.mospolytech.lab1.views.SerializerAuthor;
 import ru.mospolytech.lab1.views.SerializerCommentsList;
-import ru.mospolytech.lab1.views.SerializerProductsList;
+import ru.mospolytech.lab1.views.SerializerPetitionList;
 import ru.mospolytech.lab1.views.SerializerSignatures;
 import ru.mospolytech.lab1.classes.Auth;
 import ru.mospolytech.lab1.classes.Petition;
@@ -18,13 +18,16 @@ import ru.mospolytech.lab1.classes.Petition;
 public interface ApiInterface {
 
     @GET("api/petitions")
-    Observable<SerializerProductsList> productlist(@Query("search") String search);
+    Observable<SerializerPetitionList> productlist(@Query("search") String search);
 
     @GET("api/petitions/{id_petition}")
-    Observable<SerializerProductsList> product(@Path("id_petition") int id_petition);
+    Observable<SerializerPetitionList> product(@Path("id_petition") int id_petition);
 
     @POST("api/login")
     Call<Auth> auth(@Body Auth auth);
+
+    @POST("api/registration")
+    Call<Auth> registration(@Body Auth registration);
 
     @POST("api/add-petition")
     Call<Petition> petition(@Body Petition petition);
