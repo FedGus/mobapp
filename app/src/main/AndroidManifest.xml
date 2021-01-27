@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.mospolytech.lab1">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".classes.App"
+        android:usesCleartextTraffic="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAuQ5_76dk3qog1GaS5UYyCNMIZ3KnG_Gk"/>
+        <activity android:name=".views.ActivityPetition"></activity>
+        <activity android:name=".activities.AuthActivity"></activity>
+        <activity android:name=".activities.RegistrationActivity"></activity>
+        <activity android:name=".activities.OkActivity"></activity>
+        <activity android:name=".activities.ThanksActivity"></activity>
+        <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+
+                <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter></activity>
+    </application>
+
+</manifest>
