@@ -52,19 +52,21 @@ public class RegistrationActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         api = ApiConfiguration.getApi();
-        disposables = new CompositeDisposable();
+        disposables = new CompositeDisposable(); // парсер json
         if (!agree.isChecked() || TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(surname.getText()) || TextUtils.isEmpty(login.getText()) || TextUtils.isEmpty(password.getText())) {
             textViewReg.setText("Заполните все поля!");
         } else {
-            Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, name.getText().toString(), surname.getText().toString(), 1);
-            Call<Auth> call = api.registration(auth);
-            call.enqueue(new Callback<Auth>() {
+            Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, name.getText().toString(), surname.getText().toString(), 1); // Заносим данные пользователя в переменную
+            Call<Auth> call = api.registration(auth); // отдаем данные в ApiInterface
+            call.enqueue(new Callback<Auth>() { // После обработки должен прийти ответ
                 @Override
                 public void onResponse(Call<Auth> call, Response<Auth> response) {
+					// При ошибке
                     if (!response.isSuccessful()) {
                         textViewReg.setText("Code: " + response.code());
                         return;
                     }
+					// При успешной регистрации
                     textViewReg.setText(" ");
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "Вы успешно зарегистрированы!", Toast.LENGTH_SHORT);

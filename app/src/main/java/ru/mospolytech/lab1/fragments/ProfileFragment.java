@@ -22,10 +22,10 @@ public class ProfileFragment extends Fragment {
         name_surname = root.findViewById(R.id.name_surname);
         loginProfile = root.findViewById(R.id.loginProfile);
 
-        App appState = ((App) getContext().getApplicationContext());
-        String surnameState = appState.getSurnameState();
-        String nameState = appState.getNameState();
-        String login = appState.getLoginState();
+        App appState = ((App) getContext().getApplicationContext()); //appState хранит данные о пользователе
+        String surnameState = appState.getSurnameState(); // достаем фамилию
+        String nameState = appState.getNameState();// достаем имя
+        String login = appState.getLoginState(); // достаем логин
         name_surname.setText(nameState + " " + surnameState);
         loginProfile.setText(login);
 

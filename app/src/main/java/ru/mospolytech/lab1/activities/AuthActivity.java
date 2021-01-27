@@ -26,6 +26,7 @@ public class AuthActivity extends AppCompatActivity {
     private CompositeDisposable disposables;
 
     @Override
+	// Метод, который вызывается при загрузке документа первым
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
@@ -35,7 +36,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        authLogin();
+        authLogin(); 
     }
     public void onRegistration(View view) {
         Intent intent = new Intent(AuthActivity.this, RegistrationActivity.class);
@@ -44,31 +45,32 @@ public class AuthActivity extends AppCompatActivity {
 
     private void authLogin() {
         api = ApiConfiguration.getApi();
-        disposables = new CompositeDisposable();
-        findViewById(R.id.progressAuth).setVisibility(View.VISIBLE);
-        findViewById(R.id.button).setVisibility(View.GONE);
+        disposables = new CompositeDisposable(); //парсер json
+        findViewById(R.id.progressAuth).setVisibility(View.VISIBLE); //отображает колесико
+        findViewById(R.id.button).setVisibility(View.GONE); // скрывает кнопку
 
-        Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "", 1);
-        Call<Auth> call = api.auth(auth);
-        call.enqueue(new Callback<Auth>() {
+        Auth auth = new Auth(login.getText().toString(), password.getText().toString(), 0, "", "", 1); //переменная для класса Auth
+        Call<Auth> call = api.auth(auth); // вызываем api через ApiInterface
+        call.enqueue(new Callback<Auth>() { // асинхронный вызов 
             @Override
-            public void onResponse(Call<Auth> call, Response<Auth> response) {
-                if(!response.isSuccessful()) {
-                    textViewLogin.setText("Code: " + response.code());
+            public void onResponse(Call<Auth> call, Response<Auth> response) { // Метод вызывается, когда приходит ответ
+                if(!response.isSuccessful()) { // Если неудачно
+                    textViewLogin.setText("Code: " + response.code()); 
                     return;
                 }
                 textViewLogin.setText(" ");
-                App appState = ((App)getApplicationContext());
-                appState.setState(response.body().getId_user(), response.body().getName() , response.body().getSurname(), response.body().getLogin());
+                App appState = ((App)getApplicationContext()); 
+                appState.setState(response.body().getId_user(), response.body().getName() , response.body().getSurname(), response.body().getLogin()); // Сохраняем данные в переменной appState
                 Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(intent); // Запускаем главную страницу
             }
 
             @Override
+			// Функция, если ответ не пришел (какие-то ошибки)
             public void onFailure(Call<Auth> call, Throwable t) {
                 textViewLogin.setText("Логин или пароль введены неверно");
-                findViewById(R.id.progressAuth).setVisibility(View.GONE);
-                findViewById(R.id.button).setVisibility(View.VISIBLE);
+                findViewById(R.id.progressAuth).setVisibility(View.GONE); // Скрываем progressAuth
+                findViewById(R.id.button).setVisibility(View.VISIBLE); // отображаем button
             }
         });
     }

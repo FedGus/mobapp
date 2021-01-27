@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.mospolytech.lab1.R;
 import ru.mospolytech.lab1.activities.MainActivity;
 
+// Вызывается после создания петиции
 public class ThanksActivity extends AppCompatActivity {
 
     @Override

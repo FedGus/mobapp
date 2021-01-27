@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar); // Создаем toolbar для отображения фрагментов кода (фрагменты лежат в файле fragments)
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab); // Для отображения всегда отображающейся кнопочки
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout); 
+        NavigationView navigationView = findViewById(R.id.nav_view); //Для отображанения nav_view (боковой навигации)
 
         mHeaderView =  navigationView.getHeaderView(0); //получение хедера бокового меню для отображения логина и ФИО
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         textViewUsername = (TextView) mHeaderView.findViewById(R.id.nav_name_surname);
         textViewEmail= (TextView) mHeaderView.findViewById(R.id.nav_login);
 
-        App appState = ((App) this.getApplicationContext());
+        App appState = ((App) this.getApplicationContext()); // Вызываем appState, где хранятся данные о пользователях
         String surnameState = appState.getSurnameState();
         String nameState = appState.getNameState();
         String login = appState.getLoginState();
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     @Override
+	// Метод, который заставляет выходить пользователя из приложения после двукратного нажатия кнопки "Назад"
     public void onBackPressed() {
         if (back_pressed + 2000 > System.currentTimeMillis()) {
             moveTaskToBack(true);

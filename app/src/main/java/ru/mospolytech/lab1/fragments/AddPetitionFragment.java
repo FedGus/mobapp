@@ -49,11 +49,12 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
     ApiInterface api;
     CompositeDisposable disposables;
     GoogleMap mMap = null;
-    UiSettings mUiSettings;
+    UiSettings mUiSettings; //для карты
     String Lat = "52.03124688643826";
     String Long = "29.21152171202293";
 
     @Override
+	// Создает фрагмент для отображения карты 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mUiSettings = mMap.getUiSettings();
@@ -67,25 +68,26 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         View root = inflater.inflate(R.layout.fragment_add_petition, container, false);
 
         api = ApiConfiguration.getApi();
-        disposables = new CompositeDisposable();
+        disposables = new CompositeDisposable(); // парсер json
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.map); // Для работы с картой
         mapFragment.getMapAsync(this);
 
-        disposables.add(api.productlist("")
+        disposables.add(api.productlist("") //надо создать объект
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((productsList) -> {
-                        LatLng pin = new LatLng(52.03124688643826, 29.21152171202293);
-                        mMap.addMarker(new MarkerOptions()
+                .observeOn(AndroidSchedulers.mainThread()) // надо принять данные
+                .subscribe((productsList) -> { // получаем объект
+                        LatLng pin = new LatLng(52.03124688643826, 29.21152171202293); // создаем указатель на карте (пин)
+                        mMap.addMarker(new MarkerOptions() 
                                 .position(pin)
-                                .title(pin.toString()));
+                                .title(pin.toString())); // Можем видеть значения пина (указателя на карте)
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(pin));
 
 
                     mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                         @Override
+						// Метод при нажатии на карту
                         public void onMapClick(LatLng latLng) {
                             // Creating a marker
                             MarkerOptions markerOptions = new MarkerOptions();
@@ -122,12 +124,14 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         petitonContent = root.findViewById(R.id.content_petition);
         activity_title = root.findViewById(R.id.activity_title);
 
+		// Список категорий
         ArrayList<Category> categoryArrayList = new ArrayList<Category>();
         categoryArrayList.add(new Category("1", "Ремонт и реконструкция"));
         categoryArrayList.add(new Category("2", "Благоустройство"));
         categoryArrayList.add(new Category("3", "Озеленение"));
         categoryArrayList.add(new Category("4", "Освещение"));
-
+        
+		// Список объектов
         ArrayList<PetitionObject> petitionObjects = new ArrayList<PetitionObject>();
         petitionObjects.add(new PetitionObject("1", "Дворовые территории"));
         petitionObjects.add(new PetitionObject("2", "Многоквартирные дома"));
@@ -135,13 +139,16 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         petitionObjects.add(new PetitionObject("4", "Поликлиники"));
         petitionObjects.add(new PetitionObject("5", "Парки"));
         petitionObjects.add(new PetitionObject("6", "Летние кафе"));
-
+		
+        // Список получателей петиции
         ArrayList<Recipient> recipientArrayList = new ArrayList<Recipient>();
         recipientArrayList.add(new Recipient("1", "Муниципалитет"));
         recipientArrayList.add(new Recipient("2", "Управляющая организация домовладения"));
         recipientArrayList.add(new Recipient("3", "Управа района"));
         recipientArrayList.add(new Recipient("4", "Администрация города"));
-
+      
+	  
+	    //Объявляем спинеры
         ArrayAdapter<Category> oneAdapter = new ArrayAdapter<Category>(getContext(), android.R.layout.simple_spinner_dropdown_item, categoryArrayList);
         ArrayAdapter<PetitionObject> twoAdapter = new ArrayAdapter<PetitionObject>(getContext(), android.R.layout.simple_spinner_dropdown_item, petitionObjects);
         ArrayAdapter<Recipient> threeAdapter = new ArrayAdapter<Recipient>(getContext(), android.R.layout.simple_spinner_dropdown_item, recipientArrayList);
@@ -160,18 +167,22 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         return root;
     }
 
+	
+	    
         private void petitionNew() {
         api = ApiConfiguration.getApi();
-        disposables = new CompositeDisposable();
-        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Мозырь, бул. Юности");
-        Call<Petition> call = api.petition(petition);
-        call.enqueue(new Callback<Petition>() {
+        disposables = new CompositeDisposable(); // парсер json
+        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Мозырь, бул. Юности"); //В переменную передаем данные петиции
+        Call<Petition> call = api.petition(petition); 
+        call.enqueue(new Callback<Petition>() { // получение ответа асинхронно
             @Override
+			// Вызывается при получении ответа
             public void onResponse(Call<Petition> call, Response<Petition> response) {
                 activity_title.setText("Все хорошо");
             }
 
             @Override
+			// Вызывается, если не получили ответа
             public void onFailure(Call<Petition> call, Throwable t) {
                 Intent mainIntent = new Intent(getContext(), ThanksActivity.class);
                 getActivity().startActivity(mainIntent);

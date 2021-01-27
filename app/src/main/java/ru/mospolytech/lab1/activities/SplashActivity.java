@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ru.mospolytech.lab1.R;
 
+// Заглушка при открытии приложения
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGHT = 3000;
+    private final int SPLASH_DISPLAY_LENGHT = 3000; // Задержка в 3сек
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,17 +19,19 @@ public class SplashActivity extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable() {
             @Override
+			// Функция, которые говорит, загрузилось ли приложение
             public void run() {
                 Intent mainIntent = new Intent(SplashActivity.this, AuthActivity.class);
                 SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
+                SplashActivity.this.finish(); // Закрываем заглушку
             }
         }, SPLASH_DISPLAY_LENGHT);
     }
 
     @Override
+	
     public void onBackPressed() {
-        super.onBackPressed();
+        super.onBackPressed(); // Закрываем приложение
 
     }
 }

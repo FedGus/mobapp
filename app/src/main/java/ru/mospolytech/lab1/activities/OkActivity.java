@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.mospolytech.lab1.R;
 import ru.mospolytech.lab1.activities.MainActivity;
 
+// Для возвращения в главное меню после нажатия на клавишу "Ок"
 public class OkActivity extends AppCompatActivity {
 
     @Override

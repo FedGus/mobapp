@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiConfiguration {
 
-    public static final String BASE_URL = "http://comfortable-city.std-709.ist.mospolytech.ru/";
+    public static final String BASE_URL = "http://comfortable-city.std-709.ist.mospolytech.ru/"; // Удаленный сервер
 
     private static ApiInterface api;
     private static ApiConfiguration mInstance;
@@ -22,11 +22,11 @@ public class ApiConfiguration {
         return mInstance;
     }
 
-    private ApiConfiguration(){
+    private ApiConfiguration(){// Конфигурационные настройки
         Gson gson = new GsonBuilder().setLenient().setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").create();
         OkHttpClient client = new OkHttpClient.Builder().build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder() // Подключение retrofit
                 .client(client)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
