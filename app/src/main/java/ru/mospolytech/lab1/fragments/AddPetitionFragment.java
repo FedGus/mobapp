@@ -36,6 +36,7 @@ import ru.mospolytech.lab1.api.ApiConfiguration;
 import ru.mospolytech.lab1.api.ApiInterface;
 import ru.mospolytech.lab1.R;
 import ru.mospolytech.lab1.activities.ThanksActivity;
+import ru.mospolytech.lab1.classes.App;
 import ru.mospolytech.lab1.classes.Category;
 import ru.mospolytech.lab1.classes.Petition;
 import ru.mospolytech.lab1.classes.PetitionObject;
@@ -74,7 +75,7 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
                 .findFragmentById(R.id.map); // Для работы с картой
         mapFragment.getMapAsync(this);
 
-        disposables.add(api.productlist("") //надо создать объект
+        disposables.add(api.petitionList("") //надо создать объект
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) // надо принять данные
                 .subscribe((productsList) -> { // получаем объект
@@ -172,7 +173,9 @@ public class AddPetitionFragment extends Fragment implements OnMapReadyCallback 
         private void petitionNew() {
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable(); // парсер json
-        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,1,Lat, Long, "Мозырь, бул. Юности"); //В переменную передаем данные петиции
+            App appState = ((App) getContext().getApplicationContext()); //appState хранит данные о пользователе
+            int id_user = appState.getIdState();
+        Petition petition = new Petition(petitonName.getText().toString(), "", petitonContent.getText().toString(), 1, 1, 1,id_user,Lat, Long, "Мозырь, бул. Юности"); //В переменную передаем данные петиции
         Call<Petition> call = api.petition(petition); 
         call.enqueue(new Callback<Petition>() { // получение ответа асинхронно
             @Override

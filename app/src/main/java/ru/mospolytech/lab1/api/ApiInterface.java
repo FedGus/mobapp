@@ -1,10 +1,14 @@
 package ru.mospolytech.lab1.api;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import ru.mospolytech.lab1.views.SerializerComment;
@@ -18,10 +22,10 @@ import ru.mospolytech.lab1.classes.Petition;
 public interface ApiInterface {
 
     @GET("api/petitions")
-    Observable<SerializerPetitionList> productlist(@Query("search") String search);
+    Observable<SerializerPetitionList> petitionList(@Query("search") String search);
 
     @GET("api/petitions/{id_petition}")
-    Observable<SerializerPetitionList> product(@Path("id_petition") int id_petition);
+    Observable<SerializerPetitionList> onePetition(@Path("id_petition") int id_petition);
 
     @POST("api/login")
     Call<Auth> auth(@Body Auth auth);
@@ -31,6 +35,13 @@ public interface ApiInterface {
 
     @POST("api/add-petition")
     Call<Petition> petition(@Body Petition petition);
+
+    @GET("api/getAllPetitionOneAuthor/{id_user}")
+    Observable<SerializerPetitionList> petitionOneAuthor(@Path("id_user") int id_user);
+
+    @Multipart
+    @POST("/upload-photo/")
+    Call<ResponseBody> uploadPhoto(@Part MultipartBody.Part photo);
 
     @GET("api/getPetitionComment/{id_petition}")
     Observable<SerializerCommentsList> comment(@Path("id_petition") int id_petition);

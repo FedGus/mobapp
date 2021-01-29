@@ -84,7 +84,7 @@ public class AdapterComment extends RecyclerView.Adapter<AdapterComment.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            factImage = itemView.findViewById(R.id.newsImage);
+            factImage = itemView.findViewById(R.id.petitionImage);
             factIdText = itemView.findViewById(R.id.commentAuthor);
             sourceView = itemView.findViewById(R.id.timeStamp);
             dateNews = itemView.findViewById(R.id.commentContent);

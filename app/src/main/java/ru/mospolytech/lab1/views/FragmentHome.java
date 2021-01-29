@@ -67,7 +67,7 @@ public class FragmentHome extends Fragment implements OnMapReadyCallback  {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        disposables.add(api.productlist(textSearch.getText().toString())
+        disposables.add(api.petitionList(textSearch.getText().toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((productsList) -> {
@@ -99,7 +99,7 @@ public class FragmentHome extends Fragment implements OnMapReadyCallback  {
                        if (textSearch.getText().toString().isEmpty()) {
                            list.clear();
                        } else {
-                           disposables.add(api.productlist(textSearch.getText().toString())
+                           disposables.add(api.petitionList(textSearch.getText().toString())
                                    .subscribeOn(Schedulers.io())
                                    .observeOn(AndroidSchedulers.mainThread())
                                    .subscribe((productsList) -> {

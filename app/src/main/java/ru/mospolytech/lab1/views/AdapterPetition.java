@@ -48,11 +48,11 @@ public class AdapterPetition extends RecyclerView.Adapter<AdapterPetition.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SerializerPetitionDetail news = list.get(position);
+        SerializerPetitionDetail petition = list.get(position);
         api = ApiConfiguration.getApi();
         disposables = new CompositeDisposable();
-        holder.factIdText.setText(news.title);
-        String dtStart = news.timestamp;
+        holder.petitionIdText.setText(petition.title);
+        String dtStart = petition.timestamp;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault());
         try {
             Date date = dateFormat.parse(dtStart);
@@ -60,18 +60,13 @@ public class AdapterPetition extends RecyclerView.Adapter<AdapterPetition.ViewHo
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.dateNews.setText(news.address);
+        holder.datePetition.setText(petition.address);
 
-        Glide.with(context).load( "http://comfortable-city.std-709.ist.mospolytech.ru/api/photo/" + news.filename).into(holder.factImage);
-
-       
-//        Log.d(TAG, "onBindViewHolder: " + listimg.addAll(news.image));
-
-
+        Glide.with(context).load( "http://comfortable-city.std-709.ist.mospolytech.ru/api/photo/" + petition.filename).into(holder.petitionImage);
 
         holder.item.setOnClickListener(v -> {
             Intent intent = new Intent(context, ActivityPetition.class);
-            intent.putExtra("id_petition", news.id_petition);
+            intent.putExtra("id_petition", petition.id_petition);
             context.startActivity(intent);
         });
     }
@@ -83,19 +78,19 @@ public class AdapterPetition extends RecyclerView.Adapter<AdapterPetition.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView factImage;
-        TextView factIdText;
-        TextView dateNews;
+        ImageView petitionImage;
+        TextView petitionIdText;
+        TextView datePetition;
         TextView sourceView;
         LinearLayout item;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            factImage = itemView.findViewById(R.id.newsImage);
-            factIdText = itemView.findViewById(R.id.commentAuthor);
+            petitionImage = itemView.findViewById(R.id.petitionImage);
+            petitionIdText = itemView.findViewById(R.id.commentAuthor);
             sourceView = itemView.findViewById(R.id.timeStamp);
-            dateNews = itemView.findViewById(R.id.commentContent);
+            datePetition = itemView.findViewById(R.id.commentContent);
             item = itemView.findViewById(R.id.item);
         }
     }

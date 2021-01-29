@@ -83,7 +83,7 @@ public class ActivityPetition extends AppCompatActivity implements OnMapReadyCal
 
         if (getIntent().getExtras() != null) {
             disposables.add( // Для добавления списка
-                    api.product(getIntent().getIntExtra("id_petition", 4))
+                    api.onePetition(getIntent().getIntExtra("id_petition", 4))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(

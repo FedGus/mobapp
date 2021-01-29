@@ -13,7 +13,7 @@
     android:padding="4dp">
 
     <ImageView
-        android:id="@+id/newsImage"
+        android:id="@+id/petitionImage"
         android:layout_width="500px"
         android:layout_height="match_parent"
         android:layout_weight="1"
